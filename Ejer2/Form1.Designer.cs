@@ -53,14 +53,14 @@
             this.tbPath.Location = new System.Drawing.Point(177, 358);
             this.tbPath.Name = "tbPath";
             this.tbPath.Size = new System.Drawing.Size(142, 22);
-            this.tbPath.TabIndex = 1;
+            this.tbPath.TabIndex = 2;
             // 
             // btProcess
             // 
             this.btProcess.Location = new System.Drawing.Point(35, 333);
             this.btProcess.Name = "btProcess";
             this.btProcess.Size = new System.Drawing.Size(136, 72);
-            this.btProcess.TabIndex = 2;
+            this.btProcess.TabIndex = 1;
             this.btProcess.Text = "View Processes";
             this.btProcess.UseVisualStyleBackColor = true;
             this.btProcess.Click += new System.EventHandler(this.btProcess_Click);

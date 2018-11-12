@@ -2,6 +2,7 @@
 
 namespace Bol1_Ejer1
 {
+    //Validado
     class Program
     {
         bool salir = false;
@@ -22,35 +23,41 @@ namespace Bol1_Ejer1
             Console.WriteLine("Good bye");
         }
 
-        delegate void MyDelegate();
+        public delegate void MyDelegate();
 
-        public static bool MenuGenerar(string[] nombreOpciones, Delegate[] delegados)
+        public static bool MenuGenerar(string[] optionsName, MyDelegate[] delegates)
         {
-            if (nombreOpciones.Length == delegados.Length || (nombreOpciones.Length - 1) == delegados.Length)
+            if (optionsName.Length == delegates.Length)
             {
                 int eleccion = -1;
-                for (int i = 0; i < nombreOpciones.Length; i++)
+                for (int i = 0; i < optionsName.Length; i++)
                 {
-                    Console.WriteLine("{0,2}.{1}", (i + 1), nombreOpciones[i]);
+                    Console.WriteLine("{0,2}.{1}", (i + 1), optionsName[i]);
                 }
+                Console.WriteLine("{0,2}.Exit", optionsName.Length + 1);
                 Console.WriteLine("Write your election");
                 try
                 {
                     eleccion = Convert.ToInt32(Console.ReadLine());
-                    delegados[eleccion - 1].DynamicInvoke();
+                    if (eleccion == optionsName.Length + 1)
+                    {
+                        Console.WriteLine("Good Bye");
+                        return true;
+                    }
+                    else
+                    {
+                        delegates[eleccion - 1].Invoke();
+                    }
                 }
                 catch
                 {
                     Console.WriteLine("This isn't a valid value");
                 }
-                if (eleccion == nombreOpciones.Length)
-                {
-                    return true;
-                }
             }
             else
             {
                 Console.WriteLine("There aren't functions for every option");
+                return true;
             }
             Console.WriteLine();
             return false;
@@ -58,10 +65,10 @@ namespace Bol1_Ejer1
 
         static void Main(string[] args)
         {
-            bool salir=false;
+            bool salir = false;
             do
             {
-                salir=MenuGenerar(new string[] { "Option1", "Option2", "Option3", "Exit" }, new MyDelegate[] { f1, f2, f3,fSalir });
+                salir = MenuGenerar(new string[] { "Option1", "Option2" , "op4" }, new MyDelegate[] { f1, f2,   () => Console.Write("boo") });
             } while (!salir);
             Console.ReadKey();
         }
