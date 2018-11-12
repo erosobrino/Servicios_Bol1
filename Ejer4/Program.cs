@@ -76,6 +76,7 @@ namespace Ejer4
                 }
                 catch (FormatException)
                 {
+                    clearLines(new int[] {horseNames.Count + 2 });
                     Console.WriteLine("This isn't a valid number");
                 }
                 catch (OverflowException)
