@@ -7,6 +7,7 @@ using static Ejer3.Program;
 
 namespace Ejer3
 {
+    //Validado
     class Data
     {
         public Operation op;
@@ -52,12 +53,13 @@ namespace Ejer3
 
         static void modifyValue(object a)
         {
+            Data data = (Data)a;
+            Operation op = data.op;
             while (!stop)
             {
                 lock (l)
                 {
-                    Data data = (Data)a;
-                    Operation op = data.op;
+                   
                     if (!stop)
                     {
                         number = ((Operation)op)(number);

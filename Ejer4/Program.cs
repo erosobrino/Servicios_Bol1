@@ -33,7 +33,7 @@ namespace Ejer4
         Random rand = new Random();
         static void Main(string[] args)
         {
-            List<string> horseNames = new List<string> { "AAA", "BBB", "CCC", "DDD", "EEE" };
+            List<string> horseNames = new List<string> { "AAAA", "BBB", "CCC", "DDD", "EEE" };
 
             Console.CursorVisible = false;
             Program p = new Program();
@@ -76,7 +76,7 @@ namespace Ejer4
                 }
                 catch (FormatException)
                 {
-                    clearLines(new int[] {horseNames.Count + 2 });
+                    clearLines(new int[] { horseNames.Count + 2 });
                     Console.WriteLine("This isn't a valid number");
                 }
                 catch (OverflowException)
@@ -125,6 +125,7 @@ namespace Ejer4
 
         public void moveHorse(object a)
         {
+            Horse horse = (Horse)a;
             while (!finish)
             {
                 Thread.Sleep(rand.Next(100, 300));
@@ -132,9 +133,7 @@ namespace Ejer4
                 {
                     if (!finish)
                     {
-                        Horse horse = (Horse)a;
-                        int forward = rand.Next(1, 3);
-                        horse.position += forward;
+                        horse.position += rand.Next(1, 3);
                         int y = horse.idHorse;
                         int x = horse.position;
                         Console.SetCursorPosition(0, y);
