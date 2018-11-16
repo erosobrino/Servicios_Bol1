@@ -11,6 +11,7 @@ namespace Ejer5
     class MyTimer
     {
         static readonly private object l = new object();
+        //static long startTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
         public int interval = 100;
         delegado function;
         bool finish = false;
@@ -34,11 +35,12 @@ namespace Ejer5
                 {
                     if (!finish)
                     {
-                        Thread.Sleep(interval);
                         function();
+                        //long endTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+                        //Console.WriteLine(endTime - startTime);
                     }
                 }
-                Thread.Sleep(1000);
+                Thread.Sleep(interval);
             }
         }
         static void increment()

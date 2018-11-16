@@ -16,40 +16,41 @@ namespace Ejer6
         bool finish = false;
         bool displayStop = false;
         bool start = true;
+        bool created = false;
         static readonly private object l = new object();
         delegate void Delega(string texto, TextBox t);
         delegate void Delega2(string texto, Label lb);
+        delegate void DelegaColor(RichTextBox tb);
         Random rand = new Random();
+        Thread display;
+        Thread threadPlayer1;
+        Thread threadPlayer2;
         int num;
-        int playerGaming = 0;
         public Juego()
         {
             InitializeComponent();
-            Thread display = new Thread(parpadeo);
+            display = new Thread(parpadeo);
             display.Start();
-            Thread player1 = new Thread(points);
-            player1.Start(1);
-            Thread player2 = new Thread(points);
-            player2.Start(2);
+            threadPlayer1 = new Thread(points);
+            threadPlayer1.Start(1);
+            threadPlayer2 = new Thread(points);
+            threadPlayer2.Start(2);
         }
 
         public void parpadeo()
         {
-            Label[] labels = new Label[] { player1, player2 };
+            DelegaColor dColor = new DelegaColor(changeColor);
             while (!finish)
             {
                 lock (l)
                 {
-                    if (!displayStop&&playerGaming!=0)
+                    if (!displayStop && created && !finish)
                     {
-                        if (labels[playerGaming - 1].ForeColor != Color.Green)
+                        try
                         {
-                            labels[playerGaming - 1].ForeColor = Color.Green;
+                            this.Invoke(dColor, tbColor);
                         }
-                        else
-                        {
-                            labels[playerGaming - 1].ForeColor = Color.Black;
-                        }
+                        catch { }
                     }
                 }
                 Thread.Sleep(100);
@@ -69,9 +70,12 @@ namespace Ejer6
                 {
                     if (!finish)
                     {
-                        playerGaming = player;
                         number = rand.Next(1, 11);
-                        this.Invoke(dLB, number + "", labels[player - 1]);
+                        try
+                        {
+                            this.Invoke(dLB, number + "", labels[player - 1]);
+                        }
+                        catch { }
                         if (number == 5 || number == 7)
                         {
                             if (player == 1)
@@ -106,10 +110,14 @@ namespace Ejer6
                                 }
                                 displayStop = false;
                             }
-                            this.Invoke(dTB, num+"", textBox1);
+                            try
+                            {
+                                this.Invoke(dTB, num + "", textBox1);
+                            }
+                            catch { }
                         }
                         start = false;
-                        if (num == 20 || num == -20)
+                        if (num >= 20 || num <= -20)
                         {
                             finish = true;
                         }
@@ -117,6 +125,11 @@ namespace Ejer6
                 }
                 Thread.Sleep(rand.Next(100, number * 100));
             }
+        }
+
+        private void changeColor(RichTextBox tb)
+        {
+            tb.BackColor = Color.FromArgb(rand.Next(0, 256), rand.Next(0, 256), rand.Next(0, 256));
         }
 
         private void changeText(string texto, TextBox t)
@@ -132,6 +145,11 @@ namespace Ejer6
         private void Juego_FormClosing(object sender, FormClosingEventArgs e)
         {
             finish = true;
+        }
+
+        private void Juego_Load(object sender, EventArgs e)
+        {
+            created = true;
         }
     }
 }

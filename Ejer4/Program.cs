@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Ejer4
 {
+    //Validado
     class Horse
     {
         public static int quantity = 0;
@@ -42,17 +43,19 @@ namespace Ejer4
             p.startRace(horseNames);
 
             lock (l)
+            {
                 Monitor.Wait(l);
-            Console.SetCursorPosition(0, horseQuantity + 1);
-            Console.WriteLine("Your election was the horse {0}", p.winnerElection + 1);
-            Console.WriteLine("The winner was the horse {0}.{1}", p.winnerHorse + 1, horseNames[p.winnerHorse]);
-            if (p.winnerHorse == p.winnerElection)
-            {
-                Console.WriteLine("Congratulations, you guessed the winnner");
-            }
-            else
-            {
-                Console.WriteLine("You didn't guessed the winner");
+                Console.SetCursorPosition(0, horseQuantity + 1);
+                Console.WriteLine("Your election was the horse {0}", p.winnerElection + 1);
+                Console.WriteLine("The winner was the horse {0}.{1}", p.winnerHorse + 1, horseNames[p.winnerHorse]);
+                if (p.winnerHorse == p.winnerElection)
+                {
+                    Console.WriteLine("Congratulations, you guessed the winnner");
+                }
+                else
+                {
+                    Console.WriteLine("You didn't guessed the winner");
+                }
             }
             Console.ReadKey();
         }
@@ -128,19 +131,19 @@ namespace Ejer4
             Horse horse = (Horse)a;
             while (!finish)
             {
-                Thread.Sleep(rand.Next(100, 300));
+                Thread.Sleep(50);// rand.Next(100, 300));
                 lock (l)
                 {
                     if (!finish)
                     {
-                        horse.position += rand.Next(1, 3);
+                        horse.position += 1;// rand.Next(1, 3);
                         int y = horse.idHorse;
                         int x = horse.position;
-                        Console.SetCursorPosition(0, y);
-                        for (int i = 0; i < x; i++)
+                        Console.SetCursorPosition(x, y);
+                        /*for (int i = 0; i < x; i++)
                         {
                             Console.Write(" ");
-                        }
+                        }*/
                         Console.WriteLine("{0,2}.{1,5}", horse.idHorse + 1, horse.name);
                         if (x >= finishLine)
                         {

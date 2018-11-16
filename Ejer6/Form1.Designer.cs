@@ -35,12 +35,13 @@
             this.lbAlea2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tbColor = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // player1
             // 
             this.player1.AutoSize = true;
-            this.player1.Location = new System.Drawing.Point(170, 77);
+            this.player1.Location = new System.Drawing.Point(62, 32);
             this.player1.Name = "player1";
             this.player1.Size = new System.Drawing.Size(60, 17);
             this.player1.TabIndex = 0;
@@ -49,25 +50,25 @@
             // player2
             // 
             this.player2.AutoSize = true;
-            this.player2.Location = new System.Drawing.Point(170, 117);
+            this.player2.Location = new System.Drawing.Point(62, 72);
             this.player2.Name = "player2";
             this.player2.Size = new System.Drawing.Size(60, 17);
-            this.player2.TabIndex = 1;
+            this.player2.TabIndex = 2;
             this.player2.Text = "Player 2";
             // 
             // lbAlea1
             // 
             this.lbAlea1.AutoSize = true;
-            this.lbAlea1.Location = new System.Drawing.Point(262, 77);
+            this.lbAlea1.Location = new System.Drawing.Point(154, 32);
             this.lbAlea1.Name = "lbAlea1";
             this.lbAlea1.Size = new System.Drawing.Size(16, 17);
-            this.lbAlea1.TabIndex = 2;
+            this.lbAlea1.TabIndex = 1;
             this.lbAlea1.Text = "0";
             // 
             // lbAlea2
             // 
             this.lbAlea2.AutoSize = true;
-            this.lbAlea2.Location = new System.Drawing.Point(262, 117);
+            this.lbAlea2.Location = new System.Drawing.Point(154, 72);
             this.lbAlea2.Name = "lbAlea2";
             this.lbAlea2.Size = new System.Drawing.Size(16, 17);
             this.lbAlea2.TabIndex = 3;
@@ -76,7 +77,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(170, 217);
+            this.label3.Location = new System.Drawing.Point(62, 172);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(47, 17);
             this.label3.TabIndex = 4;
@@ -84,18 +85,27 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(235, 158);
+            this.textBox1.Location = new System.Drawing.Point(127, 113);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(199, 375);
-            this.textBox1.TabIndex = 7;
+            this.textBox1.Size = new System.Drawing.Size(123, 375);
+            this.textBox1.TabIndex = 5;
+            // 
+            // tbColor
+            // 
+            this.tbColor.Location = new System.Drawing.Point(231, 24);
+            this.tbColor.Name = "tbColor";
+            this.tbColor.Size = new System.Drawing.Size(60, 60);
+            this.tbColor.TabIndex = 6;
+            this.tbColor.Text = "";
             // 
             // Juego
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(481, 545);
+            this.ClientSize = new System.Drawing.Size(356, 545);
+            this.Controls.Add(this.tbColor);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lbAlea2);
@@ -104,8 +114,10 @@
             this.Controls.Add(this.player1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Juego";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Juego";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Juego_FormClosing);
+            this.Load += new System.EventHandler(this.Juego_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -119,6 +131,7 @@
         private System.Windows.Forms.Label lbAlea2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.RichTextBox tbColor;
     }
 }
 
