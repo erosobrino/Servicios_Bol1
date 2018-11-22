@@ -11,119 +11,141 @@ using System.Windows.Forms;
 
 namespace Ejer6
 {
-    public partial class Juego : Form
+    //Validado
+    public partial class Game : Form
     {
         bool finish = false;
         bool displayStop = false;
         bool start = true;
         bool created = false;
         static readonly private object l = new object();
-        delegate void Delega(string texto, TextBox t);
-        delegate void Delega2(string texto, Label lb);
+        delegate void DelegaTB(string texto, TextBox t);
+        delegate void DelegaLB(string texto, Label lb);
         delegate void DelegaColor(RichTextBox tb);
         Random rand = new Random();
         Thread display;
         Thread threadPlayer1;
         Thread threadPlayer2;
         int num;
-        public Juego()
+        public Game()
         {
             InitializeComponent();
-            display = new Thread(parpadeo);
-            display.Start();
-            threadPlayer1 = new Thread(points);
-            threadPlayer1.Start(1);
+            display = new Thread(flash);
+            threadPlayer1 = new Thread(() => points(1));
             threadPlayer2 = new Thread(points);
+            display.IsBackground = true;
+            threadPlayer1.IsBackground = true;
+            threadPlayer2.IsBackground = true;
+            display.Start();
+            threadPlayer1.Start();
             threadPlayer2.Start(2);
         }
 
-        public void parpadeo()
+        public void flash()
         {
             DelegaColor dColor = new DelegaColor(changeColor);
             while (!finish)
             {
                 lock (l)
                 {
-                    if (!displayStop && created && !finish)
+                    if (created && !finish)
                     {
-                        try
+                        if (displayStop)
                         {
-                            this.Invoke(dColor, tbColor);
+                            Monitor.Wait(l);
                         }
-                        catch { }
+                        if (!displayStop)
+                        {
+                            try
+                            {
+                                this.Invoke(dColor, tbColor);
+                            }
+                            catch (ObjectDisposedException) { return; }
+                        }
                     }
                 }
-                Thread.Sleep(100);
+                Thread.Sleep(200);
             }
         }
 
         public void points(object id)
         {
             int player = Convert.ToInt32(id);
-            Delega dTB = new Delega(changeText);
-            Delega2 dLB = new Delega2(changeTextLabel);
-            Label[] labels = new Label[] { lbAlea1, lbAlea2 };
+            DelegaTB dTB = new DelegaTB(changeText);
+            DelegaLB dLB = new DelegaLB(changeTextLabel);
+            Label[] labels = new Label[] { lbRand1, lbRand2 };
             int number = 0;
             while (!finish)
             {
-                lock (l)
+                if (created)
                 {
-                    if (!finish)
+                    lock (l)
                     {
-                        number = rand.Next(1, 11);
-                        try
+                        if (!finish)
                         {
-                            this.Invoke(dLB, number + "", labels[player - 1]);
-                        }
-                        catch { }
-                        if (number == 5 || number == 7)
-                        {
-                            if (player == 1)
+                            number = rand.Next(1, 11);
+                            try
                             {
-                                if (displayStop)
-                                {
-                                    num += 5;
-                                }
-                                else
-                                {
-                                    num++;
-                                }
-                                displayStop = true;
+                                this.Invoke(dLB, number + "", labels[player - 1]);
                             }
-                            else
+                            catch (ObjectDisposedException) { return; }
+                            if (number == 5 || number == 7)
                             {
-                                if (start)
+                                if (player == 1)
                                 {
-                                    num--;
-                                }
-                                else
-                                {
-                                    if (!displayStop)
+                                    if (displayStop)
                                     {
-                                        num -= 5;
+                                        num += 5;
                                     }
                                     else
                                     {
-                                        num--;
+                                        num++;
                                     }
-
+                                    displayStop = true;
                                 }
-                                displayStop = false;
+                                else
+                                {
+                                    if (start)
+                                    {
+                                        num--;
+                                        start = false;
+                                    }
+                                    else
+                                    {
+                                        if (!displayStop)
+                                        {
+                                            num -= 5;
+                                        }
+                                        else
+                                        {
+                                            num--;
+                                        }
+
+                                    }
+                                    displayStop = false;
+                                    Monitor.Pulse(l);
+                                }
+                                try
+                                {
+                                    this.Invoke(dTB, num + "", textBox1);
+                                }
+                                catch (ObjectDisposedException) { return; }
+                                //catch (Exception) { }
                             }
-                            try
+                            if (num >= 20 || num <= -20)
                             {
-                                this.Invoke(dTB, num + "", textBox1);
+                                finish = true;
+                                try
+                                {
+                                    this.Invoke(dLB, "The winner is player " + id, label1);
+                                }
+                                catch (ObjectDisposedException) { return; }
+                                //catch (Exception) { }
                             }
-                            catch { }
-                        }
-                        start = false;
-                        if (num >= 20 || num <= -20)
-                        {
-                            finish = true;
                         }
                     }
+                    Thread.Sleep(rand.Next(100, number * 100));
                 }
-                Thread.Sleep(rand.Next(100, number * 100));
             }
         }
 

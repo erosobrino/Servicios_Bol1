@@ -131,19 +131,19 @@ namespace Ejer4
             Horse horse = (Horse)a;
             while (!finish)
             {
-                Thread.Sleep(50);// rand.Next(100, 300));
+                Thread.Sleep(rand.Next(100, 300));
                 lock (l)
                 {
                     if (!finish)
                     {
-                        horse.position += 1;// rand.Next(1, 3);
+                        horse.position += rand.Next(1, 3);
                         int y = horse.idHorse;
                         int x = horse.position;
-                        Console.SetCursorPosition(x, y);
-                        /*for (int i = 0; i < x; i++)
+                        Console.SetCursorPosition(0, y);
+                        for (int i = 0; i < x; i++)
                         {
                             Console.Write(" ");
-                        }*/
+                        }
                         Console.WriteLine("{0,2}.{1,5}", horse.idHorse + 1, horse.name);
                         if (x >= finishLine)
                         {
