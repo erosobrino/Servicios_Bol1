@@ -8,6 +8,7 @@ using static Ejer3.Program;
 namespace Ejer3
 {
     //Validado
+    //fdsfs
     class Data
     {
         public Operation op;
