@@ -54,7 +54,6 @@ namespace Ejer5
             do
             {
                 t.finish = false;
-                counter = 0;
                 Console.WriteLine("Press any key to start.");
                 Console.ReadKey();
                 Thread thread1 = new Thread(t.start);
