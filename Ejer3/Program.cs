@@ -9,7 +9,7 @@ namespace Ejer3
 {
     //Validado
     //fdsfs
-   
+   //pll
     class Data
     {
         public Operation op;
