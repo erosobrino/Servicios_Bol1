@@ -35,7 +35,7 @@ namespace Ejer4
         static void Main(string[] args)
         {
             List<string> horseNames = new List<string> { "AAAA", "BBB", "CCC", "DDD", "EEE" };
-
+            string[] adfsd = new string[] { "sdf", "sdf" };
             Console.CursorVisible = false;
             Program p = new Program();
 

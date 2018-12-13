@@ -9,7 +9,7 @@ namespace Ejer3
 {
     //Validado
     //fdsfs
-   //pwfdfb
+    //pwfdfb
     class Data
     {
         public Operation op;
@@ -61,7 +61,6 @@ namespace Ejer3
             {
                 lock (l)
                 {
-                   
                     if (!stop)
                     {
                         number = ((Operation)op)(number);
